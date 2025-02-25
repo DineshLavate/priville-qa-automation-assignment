@@ -34,7 +34,7 @@ public class Hooks extends pageBase{
 				System.out.println("After Hook");
 			}
 			Logs.endTestCase();
-			pageBase.tearDown();
+//			pageBase.tearDown();
 			
 		}catch(Exception e) {
 			ExceptionHandling.HandleExecption(e, "Unable to run After scenario");

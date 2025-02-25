@@ -43,6 +43,7 @@ Scenario:  Verify the filter functinality for Dinning with multiple filter selec
     And Verify the quotes message of hotel
     And Verify the discount is available for which type of user
     
+
     
     
     

@@ -29,25 +29,35 @@ public class priville_GlueCode {
 	@When("User opens the Browser")
 	public void user_opens_the_Browser() {
 
+		// User Is opening the by passing browser as property from config.proprties file the value of browser is Chrome
+		
 		pageBase.OpenBrowser("Browser"); 
 	
 	}
 
 	@When("User Enter Priville Application URL and navigate to Map page")
 	public void user_Enter_Priville_Application_URL_and_navigate_to_Map_page() throws InterruptedException {
+		
+		//We have mentions some static wait by using thred.sleep
 		Thread.sleep(3000);
 		String url=Utils.getFileProperty("Application_Priville_URL");
+		
+		//with below line we are recording the current system time
         long startTime = System.currentTimeMillis(); // Start time
 		pageBase.driver.get(url);
 		
+		// with below line will check the current time agin after hitting the Application URL
 		long endTime = System.currentTimeMillis(); // End time
         long loadTime = endTime - startTime;
+        
+        //with below line we are checking the how much time it took to load
         System.out.println("Page Load Time: " + loadTime + " milliseconds");
 	}
 
 	@Then("Verify user is on Map Page")
 	public void verify_user_is_on_Map_Page() throws Exception {
 
+	  //  with the below line we can check the visibility of Map on the page
 	   TestBase.waitForElement(Priville_PageObjects.MapBoxlogo, 10);
 	   boolean Logo = TestBase.isElementVisible(Priville_PageObjects.MapBoxlogo, "MapLogo");
 	   
@@ -58,6 +68,7 @@ public class priville_GlueCode {
 	@Then("Verify pool and beach button is by default selected")
 	public void verify_pool_and_beach_button_is_by_default_selected() throws Exception {
         
+		//with the below lines we can validate the button validation
 		String ExpectedOption = "Pool & beach";
 		TestBase.waitForElement(Priville_PageObjects.EnabledOption, 10);
         String ActualString = TestBase.getElementText(Priville_PageObjects.EnabledOption, "Button");
@@ -68,6 +79,7 @@ public class priville_GlueCode {
 	@Then("Verify user able to see the filtered result on map page")
 	public void verify_user_able_to_see_the_filtered_result_on_map_page() throws Exception {
 	   
+		// Validating the filtered result data
 		TestBase.waitForElement(Priville_PageObjects.Serchcount, 10);
         List<WebElement> list = TestBase.getListofElements(Priville_PageObjects.Serchcount);
         Thread.sleep(5000);
@@ -79,6 +91,7 @@ public class priville_GlueCode {
 	@Then("User click on Filters button on map page")
 	public void user_click_on_Filters_button_on_map_page() throws Exception {
 	    
+		//validating the button functinality
 		Thread.sleep(5000);
 		TestBase.waitForElement(Priville_PageObjects.Filterbutton, 10);
         TestBase.clickonElement(Priville_PageObjects.Filterbutton, "Filter button");
@@ -88,6 +101,7 @@ public class priville_GlueCode {
 	@Then("Verify user able to see Filter your Serch window")
 	public void verify_user_able_to_see_Filter_your_Serch_window() throws Exception {
 	    
+		//validation on user is on right window and doing assertion
 		String ExpectedOption = "Filter your search";
 		TestBase.waitForElement(Priville_PageObjects.Filteryoursearchtext, 10);
         String ActualString = TestBase.getElementText(Priville_PageObjects.Filteryoursearchtext, "FilterSerchtexton window");
@@ -97,7 +111,9 @@ public class priville_GlueCode {
 
 	@Then("Verify map page result and the count avialable on Filter your search should be same")
 	public void verify_map_page_result_and_the_count_avialable_on_Filter_your_search_should_be_same() throws Exception {
-
+   
+		//validating the data integrity between two pages doing assertion on them
+		
 		TestBase.waitForElement(Priville_PageObjects.ShowVenubutton, 10);
         String ActualCounString = TestBase.getElementText(Priville_PageObjects.ShowVenubutton, "show venue button");
 	    
@@ -106,7 +122,7 @@ public class priville_GlueCode {
         String[] strarr = ActualCounString.split(" ");
         String countstr = strarr[1];
         int Actualcount = Integer.parseInt(countstr);
-System.out.println("THe count is = "+Resultcount1);
+        System.out.println("THe count is = "+Resultcount1);
         assertEquals("Values do match!", Actualcount, Resultcount1);   
         
 	}
@@ -114,6 +130,8 @@ System.out.println("THe count is = "+Resultcount1);
 	@Then("user select any Location")
 	public void user_select_any_Location() throws Exception {
 	    
+		//validaing user can able to select location
+		
 		TestBase.waitForElement(Priville_PageObjects.SelectWithoption("Dubai"), 20);
         TestBase.clickonElement(Priville_PageObjects.SelectWithoption("Dubai"), "Filter button");
         
@@ -122,6 +140,7 @@ System.out.println("THe count is = "+Resultcount1);
 	@Then("Verify the count on show venue button is variable")
 	public void verify_the_count_on_show_venue_button_is_variable() throws Exception {
 	    
+		//validating data integrity after doing some operation
 		TestBase.waitForElement(Priville_PageObjects.ShowVenubutton, 10);
         String ActualCounString = TestBase.getElementText(Priville_PageObjects.ShowVenubutton, "show venue button");
 	    
@@ -138,6 +157,7 @@ System.out.println("THe count is = "+Resultcount1);
 	@Then("user click on show venue button")
 	public void user_click_on_show_venue_button() throws Exception {
 	   
+		// validating the button functinality
 		TestBase.waitForElement(Priville_PageObjects.ShowVenubutton, 10);
         TestBase.clickonElement(Priville_PageObjects.ShowVenubutton, "show venue button");
 		
@@ -146,6 +166,7 @@ System.out.println("THe count is = "+Resultcount1);
 	@Then("Verify the Filter your search count and Map page result count should be same")
 	public void verify_the_Filter_your_search_count_and_Map_page_result_count_should_be_same() throws Exception {
 	    
+		//validating data integrity after doing some operation
 		TestBase.waitForElement(Priville_PageObjects.Serchcount, 10);
         List<WebElement> list = TestBase.getListofElements(Priville_PageObjects.Serchcount);
         
@@ -158,6 +179,7 @@ System.out.println("THe count is = "+Resultcount1);
 	@Given("User click on Clear filters button on filter your search page")
 	public void user_click_on_Clear_filters_button_on_filter_your_search_page() throws Exception {
         
+		// validating the button is working properly functionality 
 		TestBase.waitForElement(Priville_PageObjects.Clearfiltersbutton, 10);
         TestBase.clickonElement(Priville_PageObjects.Clearfiltersbutton, "Clear filters button");
 	
@@ -166,6 +188,7 @@ System.out.println("THe count is = "+Resultcount1);
 	@Then("User click on Dining button")
 	public void user_click_on_Dining_button() throws Exception {
 	   
+		// validating the button is working properly functionality 
 		TestBase.waitForElement(Priville_PageObjects.Diningbutton, 10);
         TestBase.clickonElement(Priville_PageObjects.Diningbutton, "Dining button");
 		
@@ -174,6 +197,7 @@ System.out.println("THe count is = "+Resultcount1);
 	@Then("User select {string} as discount")
 	public void user_select_as_discount(String string) throws Exception {
 	    
+		// applying more filters
 		 Discount = string;
 		TestBase.waitForElement(Priville_PageObjects.SelectWithoption(string), 20);
         TestBase.clickonElement(Priville_PageObjects.SelectWithoption(string), "Filter button");
@@ -183,6 +207,7 @@ System.out.println("THe count is = "+Resultcount1);
 	@Then("User check the discount percentage for a particular hotel")
 	public void user_check_the_discount_percentage_for_a_particular_hotel() throws Exception {
 	    
+		
 		TestBase.waitForElement(Priville_PageObjects.Discountper, 10);
 		String discountonmappage = TestBase.getElementText(Priville_PageObjects.Discountper, "Discount bar on hotel image");
 		System.out.println(discountonmappage);
