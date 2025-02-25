@@ -1,1 +1,1 @@
-# priville-qa-automation-assignment
+# priville-qa-assignment
