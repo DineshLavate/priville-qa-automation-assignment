@@ -10,33 +10,38 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import com.google.gson.JsonObject;
+
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.restassured.RestAssured;
+import io.restassured.path.json.JsonPath;
+import io.restassured.response.Response;
 import pageObjects.Priville_PageObjects;
 import testBase.TestBase;
-import testBase.pageBase;
+import testBase.PageBase;
 import utility.Utils;
 
-public class priville_GlueCode {
+public class Privilee_GlueCode {
 
 	public static int Resultcount1;
 	public static int Resultcount2;
 	public static int ActualcountafterAddingfilter;
 	public static String Discount;
+	public static String discountonhotelwindow;
 	
-	
-	@When("User opens the Browser")
-	public void user_opens_the_Browser() {
-
+	@When("the user opens the browser")
+	public void the_user_opens_the_browser() {
+		
 		// User Is opening the by passing browser as property from config.proprties file the value of browser is Chrome
 		
-		pageBase.OpenBrowser("Browser"); 
+		PageBase.OpenBrowser("Browser"); 
 	
 	}
 
-	@When("User Enter Priville Application URL and navigate to Map page")
-	public void user_Enter_Priville_Application_URL_and_navigate_to_Map_page() throws InterruptedException {
+	@When("the user navigates to the Privilee application and opens the Map page")
+	public void the_user_navigates_to_the_Privilee_application_and_opens_the_Map_page() throws InterruptedException {
 		
 		//We have mentions some static wait by using thred.sleep
 		Thread.sleep(3000);
@@ -44,7 +49,7 @@ public class priville_GlueCode {
 		
 		//with below line we are recording the current system time
         long startTime = System.currentTimeMillis(); // Start time
-		pageBase.driver.get(url);
+		PageBase.driver.get(url);
 		
 		// with below line will check the current time agin after hitting the Application URL
 		long endTime = System.currentTimeMillis(); // End time
@@ -54,8 +59,8 @@ public class priville_GlueCode {
         System.out.println("Page Load Time: " + loadTime + " milliseconds");
 	}
 
-	@Then("Verify user is on Map Page")
-	public void verify_user_is_on_Map_Page() throws Exception {
+	@Then("the user should be on the Map page")
+	public void the_user_should_be_on_the_Map_page() throws Exception {
 
 	  //  with the below line we can check the visibility of Map on the page
 	   TestBase.waitForElement(Priville_PageObjects.MapBoxlogo, 10);
@@ -65,8 +70,8 @@ public class priville_GlueCode {
 	
 	}
 
-	@Then("Verify pool and beach button is by default selected")
-	public void verify_pool_and_beach_button_is_by_default_selected() throws Exception {
+	@Then("the {string} filter button should be selected by default")
+	public void the_filter_button_should_be_selected_by_default(String string) throws Exception {
         
 		//with the below lines we can validate the button validation
 		String ExpectedOption = "Pool & beach";
@@ -76,8 +81,8 @@ public class priville_GlueCode {
 
 	}
 
-	@Then("Verify user able to see the filtered result on map page")
-	public void verify_user_able_to_see_the_filtered_result_on_map_page() throws Exception {
+	@Then("the user should see filtered results on the Map page")
+	public void the_user_should_see_filtered_results_on_the_Map_page() throws Exception {
 	   
 		// Validating the filtered result data
 		TestBase.waitForElement(Priville_PageObjects.Serchcount, 10);
@@ -88,8 +93,8 @@ public class priville_GlueCode {
 	
 	}
 
-	@Then("User click on Filters button on map page")
-	public void user_click_on_Filters_button_on_map_page() throws Exception {
+	@When("the user clicks on the {string} button on the Map page")
+	public void the_user_clicks_on_the_button_on_the_Map_page(String string) throws Exception {
 	    
 		//validating the button functinality
 		Thread.sleep(5000);
@@ -98,8 +103,8 @@ public class priville_GlueCode {
         
 	}
 
-	@Then("Verify user able to see Filter your Serch window")
-	public void verify_user_able_to_see_Filter_your_Serch_window() throws Exception {
+	@Then("the {string} window should be displayed")
+	public void the_window_should_be_displayed(String string) throws Exception {
 	    
 		//validation on user is on right window and doing assertion
 		String ExpectedOption = "Filter your search";
@@ -109,8 +114,8 @@ public class priville_GlueCode {
 		
 	}
 
-	@Then("Verify map page result and the count avialable on Filter your search should be same")
-	public void verify_map_page_result_and_the_count_avialable_on_Filter_your_search_should_be_same() throws Exception {
+	@Then("the results on the Map page should match the count displayed in {string} on {string} button")
+	public void the_results_on_the_Map_page_should_match_the_count_displayed_in_on_button(String string, String string2) throws Exception {
    
 		//validating the data integrity between two pages doing assertion on them
 		
@@ -127,8 +132,8 @@ public class priville_GlueCode {
         
 	}
 
-	@Then("user select any Location")
-	public void user_select_any_Location() throws Exception {
+	@When("the user selects any location")
+	public void the_user_selects_any_location() throws Exception {
 	    
 		//validaing user can able to select location
 		
@@ -137,8 +142,8 @@ public class priville_GlueCode {
         
 	}
 
-	@Then("Verify the count on show venue button is variable")
-	public void verify_the_count_on_show_venue_button_is_variable() throws Exception {
+	@Then("the count on the {string} button should update dynamically")
+	public void the_count_on_the_button_should_update_dynamically(String string) throws Exception {
 	    
 		//validating data integrity after doing some operation
 		TestBase.waitForElement(Priville_PageObjects.ShowVenubutton, 10);
@@ -154,8 +159,8 @@ public class priville_GlueCode {
         
 	}
 
-	@Then("user click on show venue button")
-	public void user_click_on_show_venue_button() throws Exception {
+	@When("the user clicks on the {string} button")
+	public void the_user_clicks_on_the_button(String string) throws Exception {
 	   
 		// validating the button functinality
 		TestBase.waitForElement(Priville_PageObjects.ShowVenubutton, 10);
@@ -163,8 +168,8 @@ public class priville_GlueCode {
 		
 	}
 
-	@Then("Verify the Filter your search count and Map page result count should be same")
-	public void verify_the_Filter_your_search_count_and_Map_page_result_count_should_be_same() throws Exception {
+	@Then("the count in {string} should match the number of results on the Map page")
+	public void the_count_in_should_match_the_number_of_results_on_the_Map_page(String string) throws Exception {
 	    
 		//validating data integrity after doing some operation
 		TestBase.waitForElement(Priville_PageObjects.Serchcount, 10);
@@ -176,8 +181,8 @@ public class priville_GlueCode {
 
 	}
 
-	@Given("User click on Clear filters button on filter your search page")
-	public void user_click_on_Clear_filters_button_on_filter_your_search_page() throws Exception {
+	@When("the user clicks on the {string} button in {string}")
+	public void the_user_clicks_on_the_button_in(String string, String string2) throws Exception {
         
 		// validating the button is working properly functionality 
 		TestBase.waitForElement(Priville_PageObjects.Clearfiltersbutton, 10);
@@ -185,8 +190,8 @@ public class priville_GlueCode {
 	
 	}
 
-	@Then("User click on Dining button")
-	public void user_click_on_Dining_button() throws Exception {
+	@When("the user clicks on the {string} button on map page")
+	public void the_user_clicks_on_the_button_on_map_page(String string) throws Exception {
 	   
 		// validating the button is working properly functionality 
 		TestBase.waitForElement(Priville_PageObjects.Diningbutton, 10);
@@ -204,28 +209,30 @@ public class priville_GlueCode {
                 
 	}
 
-	@Then("User check the discount percentage for a particular hotel")
-	public void user_check_the_discount_percentage_for_a_particular_hotel() throws Exception {
+	@When("the user verifies the discount percentage for a particular hotel")
+	public void the_user_verifies_the_discount_percentage_for_a_particular_hotel() throws Exception {
 	    
-		
+		//wait for element for 10 sec
 		TestBase.waitForElement(Priville_PageObjects.Discountper, 10);
 		String discountonmappage = TestBase.getElementText(Priville_PageObjects.Discountper, "Discount bar on hotel image");
 		System.out.println(discountonmappage);
 		
 	}
 
-	@Then("Verify user able to select one hotel from serch result")
-	public void verify_user_able_to_select_one_hotel_from_serch_result() throws Exception {
+	@When("the user selects a hotel from the search results")
+	public void the_user_selects_a_hotel_from_the_search_results() throws Exception {
 	   
+		// Click on the element
 		TestBase.waitForElement(Priville_PageObjects.anyHotel, 10);
         TestBase.clickonElement(Priville_PageObjects.anyHotel, "any hotel from search result");
 		
 	}
 
-	@Then("Verify user can able to see all the images of selected hotel on hotel window")
-	public void verify_user_can_able_to_see_all_the_images_of_selected_hotel_on_hotel_window() throws Exception {
+	@Then("the user should be able to see all images of the selected hotel on the hotel window")
+	public void the_user_should_be_able_to_see_all_images_of_the_selected_hotel_on_the_hotel_window() throws Exception {
 	   
 		TestBase.waitForElement(Priville_PageObjects.Imgeonhotelwindow, 10);
+		// Mouse Over on the element
 		TestBase.mouseOver(Priville_PageObjects.Imgeonhotelwindow);
 		for(int i=0;i<3;i++) {
 			
@@ -235,28 +242,31 @@ public class priville_GlueCode {
 		}
 	}
 
-	@Then("verify the discount percentage on map page and hotel window should be same")
-	public void verify_the_discount_percentage_on_map_page_and_hotel_window_should_be_same() throws Exception {
+	@Then("the discount percentage on the Map page and the hotel window should match")
+	public void the_discount_percentage_on_the_Map_page_and_the_hotel_window_should_match() throws Exception {
 	    
+		// get text from element and store in variable
 		TestBase.waitForElement(Priville_PageObjects.discountonhotelwindow, 10);
-		String discountonhotelwindow = TestBase.getElementText(Priville_PageObjects.discountonhotelwindow, "Discount bar on hotel image");
+	    discountonhotelwindow = TestBase.getElementText(Priville_PageObjects.discountonhotelwindow, "Discount bar on hotel image");
 		System.out.println(discountonhotelwindow);
         assertEquals("Values do match!", discountonhotelwindow, Discount);   
 
 	}
 
-	@Then("Verify the opening hours on hotel window")
-	public void verify_the_opening_hours_on_hotel_window() throws Exception {
+	@Then("the user verifies the opening hours on the hotel window")
+	public void the_user_verifies_the_opening_hours_on_the_hotel_window() throws Exception {
 	    
+		// validate the expected and actual Strings
 		String ExpectedOpeningHours = "6:30 - 22:30";
 		TestBase.waitForElement(Priville_PageObjects.Openinghours, 10);
 		String ActualOpeningTimingonHotelWindow = TestBase.getElementText(Priville_PageObjects.Openinghours, "Opening hours time");
         assertEquals("Values do match!", ActualOpeningTimingonHotelWindow, ExpectedOpeningHours);
 	}
 
-	@Then("Verify the quotes message of hotel")
-	public void verify_the_quotes_message_of_hotel() throws Exception {
+	@Then("checks the hotel's quote message")
+	public void checks_the_hotel_s_quote_message() throws Exception {
 	   
+		// Validating the Actual and expected values
 		String ExpectedQuotes = "This all-day-dining restaurant serves pizza fresh from the oven, spicy delights cooked live from the Tandoor, deli-style salads, plus pudding counters with free-flowing chocolate and home-made ice-cream.";
 		TestBase.waitForElement(Priville_PageObjects.Quetosonhotelwindow, 10);
 		String Actualquotes = TestBase.getElementText(Priville_PageObjects.Quetosonhotelwindow, "Quetes on hotel window");
@@ -264,35 +274,40 @@ public class priville_GlueCode {
 	
 	}
 
-	@Then("Verify the discount is available for which type of user")
-	public void verify_the_discount_is_available_for_which_type_of_user() throws Exception {
+	@Then("verifies the discount eligibility based on the user type")
+	public void verifies_the_discount_eligibility_based_on_the_user_type() throws Exception {
 	    
 		
+		// wait for element
 		TestBase.waitForElement(Priville_PageObjects.discounAvialbleUsers, 10);
 		String DiscountapplicableUsers = TestBase.getElementText(Priville_PageObjects.discounAvialbleUsers, "Discount available user");
 		
 		System.out.println(DiscountapplicableUsers);
 	}
 	
-	@Then("User enter the firstname on Explore Privilee venue window")
-	public void user_enter_the_firstname_on_Explore_Privilee_venue_window() throws Exception {
+	
+	@Then("enters the first name in the {string} window")
+	public void enters_the_first_name_in_the_window(String string) throws Exception {
 	    
+		// type a text in text box
 		TestBase.waitForElement(Priville_PageObjects.FirstNametextbox, 10);
         TestBase.typeinTextBox(Priville_PageObjects.FirstNametextbox, "Dinesh", "First name field");
         
 	}
 
-	@Then("User enter the email on Explore Privilee venue window")
-	public void user_enter_the_email_on_Explore_Privilee_venue_window() throws Exception {
-	   
+	@Then("enters the email in the {string} window")
+	public void enters_the_email_in_the_window(String string) throws Exception {
+		
+		// type a text in text box
 		TestBase.waitForElement(Priville_PageObjects.Emailtextbox, 10);
         TestBase.typeinTextBox(Priville_PageObjects.Emailtextbox, "dinesh.lavate@simformsolutions.com", "Email textbox");
         
 	}
 
-	@Then("User select the country code {string} from country dropdown")
-	public void user_select_the_country_code_from_country_dropdown(String string) throws Exception {
+	@Then("selects the country code {string} from the dropdown")
+	public void selects_the_country_code_from_the_dropdown(String string) throws Exception {
 	   
+		// select the country from dropdown
 		TestBase.waitForElement(Priville_PageObjects.countrydropdown, 10);
         TestBase.clickonElement(Priville_PageObjects.countrydropdown, "country Dropdwon");
         
@@ -311,18 +326,75 @@ public class priville_GlueCode {
         }
 	}
 
-	@Then("User enter the Phone Number on Explore Privilee venue window")
-	public void user_enter_the_Phone_Number_on_Explore_Privilee_venue_window() throws Exception {
+	@Then("enters the phone number in the {string} window")
+	public void enters_the_phone_number_in_the_window(String string) throws Exception {
 	    
 		TestBase.waitForElement(Priville_PageObjects.MobileNumbertextbox, 10);
         TestBase.typeinTextBox(Priville_PageObjects.MobileNumbertextbox, "9370181893", "Mobile number field");
         
 	}
 
-	@Then("User click on View button")
-	public void user_click_on_View_button() throws Exception {
+	@Then("clicks on the {string} button")
+	public void clicks_on_the_button(String string) throws Exception {
 		
+		// wait for element
 		TestBase.waitForElement(Priville_PageObjects.Viewbutton, 10);
         TestBase.clickonElement(Priville_PageObjects.Viewbutton, "View button");
+	}
+	
+	@Then("the user will navigate to Explore Privilee venues window")
+	public void the_user_will_navigate_to_Explore_Privilee_venues_window() throws Exception {
+	    
+		// check the visibility of element on the page
+		TestBase.waitForElement(Priville_PageObjects.Exporeprivileeetext, 10);
+        boolean istextavailable = TestBase.isElementVisible(Priville_PageObjects.Exporeprivileeetext, "Expore Privilee text");
+		
+        if(istextavailable==true) {
+        	System.out.println("user successfully naviage to Explore Privilee venues window");
+        }else {
+        	System.out.println("user is not naviage to Explore Privilee venues window");
+
+        }
+	}
+	
+	@Then("user close the hotel model window")
+	public void user_close_the_hotel_model_window() throws Exception {
+	    
+		// click on element
+		TestBase.waitForElement(Priville_PageObjects.modalwindowclosebutton, 10);
+        TestBase.clickonElement(Priville_PageObjects.modalwindowclosebutton, "close button on modal window");
+	}
+	
+	@Then("verify the discount available for the selected venue via API and validate the discount percentage")
+	public void verify_the_discount_available_for_the_selected_venue_via_API_and_validate_the_discount_percentage() {
+	    
+		// check the API reponce data and validate with UI
+		String discountfromAPI = null;
+		Response response = RestAssured.given().baseUri("https://staging-website.privilee.ae/api/map") // Replace with
+				// actual API
+                        .when().get("/restaurant") // Replace with actual endpoint
+                        .then().extract().response(); // Extract response
+		 
+        JsonPath extracter = response.jsonPath();
+
+        List<String> venueNames = extracter.getList("items.id");
+        
+        
+        for(int i=0;i<venueNames.size();i++) {
+        	
+        	String venu = venueNames.get(i);
+        	if(venu.equalsIgnoreCase("WjIa4SoAAEMDR0vk")) {
+        		
+        		 discountfromAPI= extracter.get("items["+i+"].thingsToDo[0].title").toString();
+        	
+        		System.out.println(discountfromAPI);
+        	}
+        	
+        }
+         int countfromAPI = extracter.getInt("items.size()");
+         System.out.println("Count got from API"+countfromAPI);
+         
+         assertEquals("Values do match!", discountonhotelwindow, discountfromAPI);   
+
 	}
 }

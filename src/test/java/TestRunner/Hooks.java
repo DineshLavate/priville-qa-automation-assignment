@@ -7,11 +7,11 @@ import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
 import testBase.TestBase;
-import testBase.pageBase;
+import testBase.PageBase;
 import utility.ExceptionHandling;
 import utility.Logs;
 
-public class Hooks extends pageBase{
+public class Hooks extends PageBase{
 
 	
 	@Before
@@ -34,7 +34,7 @@ public class Hooks extends pageBase{
 				System.out.println("After Hook");
 			}
 			Logs.endTestCase();
-//			pageBase.tearDown();
+			PageBase.tearDown();
 			
 		}catch(Exception e) {
 			ExceptionHandling.HandleExecption(e, "Unable to run After scenario");

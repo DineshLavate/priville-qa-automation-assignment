@@ -16,7 +16,7 @@ import utility.Logs;
 import utility.Utils;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
-public class pageBase {
+public class PageBase {
 
 	public static WebDriver driver;
 	public static String sBrowserName;

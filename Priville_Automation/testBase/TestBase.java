@@ -16,7 +16,7 @@ import utility.ExceptionHandling;
 import utility.Logs;
 
 
-public class TestBase extends pageBase {
+public class TestBase extends PageBase {
 	
 	public static String TestCaseName;
 	
@@ -176,7 +176,7 @@ public class TestBase extends pageBase {
 	
 	public static void mouseOver(By ele) throws Exception {
 		try {
-			Actions action = new Actions(pageBase.driver);
+			Actions action = new Actions(PageBase.driver);
 			action.moveToElement(driver.findElement(ele)).build().perform();
 			Logs.info("elements is moved");
 		}catch (Exception e) {
@@ -188,7 +188,7 @@ public class TestBase extends pageBase {
 	public static String getTextFromPropertis(By object) throws Exception {
 		String text = null;
 		try {
-			text = (String) ((JavascriptExecutor) pageBase.driver).executeScript("return arguments[0].value;", pageBase.driver.findElement(object));	
+			text = (String) ((JavascriptExecutor) PageBase.driver).executeScript("return arguments[0].value;", PageBase.driver.findElement(object));	
 			Logs.info("text is getting from properties");
 		}catch(Exception e) {
 			ExceptionHandling.HandleExecption(e, "unable to get text from properties");

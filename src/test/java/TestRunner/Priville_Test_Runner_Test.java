@@ -7,7 +7,7 @@ import io.cucumber.junit.CucumberOptions;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-	features={"Priville_Automation/features/Verify Filters Functinality.feature",
+	features={"Priville_Automation/features",
 	 },
 		glue={"glueCode", "TestRunner"},
 		plugin= {"com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:","progress","summary"},
@@ -15,5 +15,6 @@ import io.cucumber.junit.CucumberOptions;
 		strict=false
 		)
 public class Priville_Test_Runner_Test {
+	
 
 }
